@@ -3,6 +3,7 @@ package com.study.billingservice.service.impl;
 import com.study.billingservice.dto.BalanceInfoDto;
 import com.study.billingservice.dto.RequestTransactionDto;
 import com.study.billingservice.dto.TransactionHistoryDto;
+import com.study.billingservice.dto.TransferRequestDto;
 import com.study.billingservice.entity.TransactionHistory;
 import com.study.billingservice.entity.UserBalance;
 import com.study.billingservice.exception.BalanceNotEnoughException;
@@ -49,11 +50,12 @@ public class UserBalanceServiceImpl implements UserBalanceService {
 
     @Transactional
     @Override
-    public BalanceInfoDto addBalance(Long userId, BigDecimal amount, String comment) {
+    public BalanceInfoDto addBalance(Long userId, TransferRequestDto transferRequestDto) {
         LocalDateTime currDate = LocalDateTime.now();
+        BigDecimal amount = transferRequestDto.amount();
 
         UserBalance userBalance = getOrCreateUserBalance(userId, amount, currDate);
-        TransactionHistory transactionHistory = new TransactionHistory(null, userId, amount, comment);
+        TransactionHistory transactionHistory = new TransactionHistory(null, userId, amount, transferRequestDto.comment());
 
         userBalanceRepo.save(userBalance);
         transactionHistoryRepo.save(transactionHistory);
@@ -62,16 +64,17 @@ public class UserBalanceServiceImpl implements UserBalanceService {
 
     @Transactional
     @Override
-    public BalanceInfoDto subtractBalance(Long userId, BigDecimal amount, String comment) {
+    public BalanceInfoDto subtractBalance(Long userId, TransferRequestDto transferRequestDto) {
         UserBalance userBalance = userBalanceRepo.findByUserId(userId).orElse(null);
         LocalDateTime currDate = LocalDateTime.now();
+        BigDecimal amount = transferRequestDto.amount();
 
         checkBalanceAmount(userBalance, amount);
 
         userBalance.setUpdateDate(currDate);
         userBalance.subtractBalance(amount);
 
-        TransactionHistory transactionHistory = new TransactionHistory(userId, null, amount, comment);
+        TransactionHistory transactionHistory = new TransactionHistory(userId, null, amount, transferRequestDto.comment());
         transactionHistory.setCreateDate(currDate);
         transactionHistory.setUpdateDate(currDate);
 
@@ -82,14 +85,17 @@ public class UserBalanceServiceImpl implements UserBalanceService {
 
     @Transactional
     @Override
-    public BalanceInfoDto transferBalance(Long fromUserId, Long toUserId, BigDecimal amount, String comment) {
+    public BalanceInfoDto transferBalance(Long fromUserId, TransferRequestDto transferRequestDto) {
         UserBalance senderUserBalance = userBalanceRepo.findByUserId(fromUserId).orElse(null);
         LocalDateTime currDate = LocalDateTime.now();
+        Long toUserId = transferRequestDto.toUserId();
+        BigDecimal amount = transferRequestDto.amount();
+
 
         checkBalanceAmount(senderUserBalance, amount);
 
         UserBalance receiverUserBalance = getOrCreateUserBalance(toUserId, amount, currDate);
-        TransactionHistory transactionHistory = new TransactionHistory(fromUserId, toUserId, amount, comment);
+        TransactionHistory transactionHistory = new TransactionHistory(fromUserId, toUserId, amount, transferRequestDto.comment());
         transactionHistory.setCreateDate(currDate);
         transactionHistory.setUpdateDate(currDate);
 
