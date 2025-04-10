@@ -27,9 +27,9 @@ import java.util.Optional;
 public class UserBalanceServiceImpl implements UserBalanceService {
 
     public static final String DEFAULT_CURRENCY = "KZT";
-    private TransactionHistoryRepo transactionHistoryRepo;
-    private UserBalanceRepo userBalanceRepo;
-    private TransactionMapper transactionMapper;
+    private final TransactionHistoryRepo transactionHistoryRepo;
+    private final UserBalanceRepo userBalanceRepo;
+    private final TransactionMapper transactionMapper;
 
     public UserBalanceServiceImpl(TransactionHistoryRepo transactionHistoryRepo, UserBalanceRepo userBalanceRepo,
                                   TransactionMapper transactionMapper) {
@@ -56,6 +56,9 @@ public class UserBalanceServiceImpl implements UserBalanceService {
 
         UserBalance userBalance = getOrCreateUserBalance(userId, amount, currDate);
         TransactionHistory transactionHistory = new TransactionHistory(null, userId, amount, transferRequestDto.comment());
+        transactionHistory.setCreateDate(currDate);
+        transactionHistory.setUpdateDate(currDate);
+        userBalance.addBalance(amount);
 
         userBalanceRepo.save(userBalance);
         transactionHistoryRepo.save(transactionHistory);
@@ -115,7 +118,7 @@ public class UserBalanceServiceImpl implements UserBalanceService {
         Pageable pageable = PageRequest.of(requestTransactionDto.page(), requestTransactionDto.size(), sort);
         TransactionSearchSpecification searchSpecification = new TransactionSearchSpecification(requestTransactionDto);
         Page<TransactionHistory> transactionHistoryPage = transactionHistoryRepo.findAll(searchSpecification, pageable);
-        return transactionHistoryPage.map(el -> transactionMapper.entityToDto(el));
+        return transactionHistoryPage.map(transactionMapper::entityToDto);
     }
 
     private void checkBalanceAmount(UserBalance userBalance, BigDecimal subtractAmount) {
@@ -134,7 +137,6 @@ public class UserBalanceServiceImpl implements UserBalanceService {
             userBalance.setUpdateDate(currDate);
         } else {
             userBalance = userBalanceOptional.get();
-            userBalance.addBalance(amount);
             userBalance.setUpdateDate(currDate);
         }
         return userBalance;

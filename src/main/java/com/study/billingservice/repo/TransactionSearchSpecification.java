@@ -16,7 +16,7 @@ public class TransactionSearchSpecification implements Specification<Transaction
 
     private static final String FROM_USER_ID_FIELD = "fromUserId";
     private static final String TO_USER_ID_FIELD = "toUserId";
-    private RequestTransactionDto requestTransactionDto;
+    private final RequestTransactionDto requestTransactionDto;
 
     public TransactionSearchSpecification(RequestTransactionDto requestTransactionDto) {
         this.requestTransactionDto = requestTransactionDto;

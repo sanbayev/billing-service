@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/rest/user")
 public class UserBalanceController {
 
-    private UserBalanceService userBalanceService;
+    private final UserBalanceService userBalanceService;
 
     public UserBalanceController(UserBalanceService userBalanceService) {
         this.userBalanceService = userBalanceService;

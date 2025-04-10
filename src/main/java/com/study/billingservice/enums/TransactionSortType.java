@@ -8,6 +8,5 @@ import lombok.Getter;
 public enum TransactionSortType {
     DEFAULT("id"), DATE("updateDate"), AMOUNT("amount");
 
-
     private String value;
 }
