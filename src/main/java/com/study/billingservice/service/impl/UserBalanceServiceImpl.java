@@ -54,7 +54,7 @@ public class UserBalanceServiceImpl implements UserBalanceService {
         LocalDateTime currDate = LocalDateTime.now();
         BigDecimal amount = transferRequestDto.amount();
 
-        UserBalance userBalance = getOrCreateUserBalance(userId, amount, currDate);
+        UserBalance userBalance = getOrCreateUserBalance(userId, currDate);
         TransactionHistory transactionHistory = new TransactionHistory(null, userId, amount, transferRequestDto.comment());
         transactionHistory.setCreateDate(currDate);
         transactionHistory.setUpdateDate(currDate);
@@ -97,7 +97,7 @@ public class UserBalanceServiceImpl implements UserBalanceService {
 
         checkBalanceAmount(senderUserBalance, amount);
 
-        UserBalance receiverUserBalance = getOrCreateUserBalance(toUserId, amount, currDate);
+        UserBalance receiverUserBalance = getOrCreateUserBalance(toUserId,currDate);
         TransactionHistory transactionHistory = new TransactionHistory(fromUserId, toUserId, amount, transferRequestDto.comment());
         transactionHistory.setCreateDate(currDate);
         transactionHistory.setUpdateDate(currDate);
@@ -127,12 +127,14 @@ public class UserBalanceServiceImpl implements UserBalanceService {
         }
     }
 
-    private UserBalance getOrCreateUserBalance(Long userId, BigDecimal amount, LocalDateTime currDate) {
+    private UserBalance getOrCreateUserBalance(Long userId, LocalDateTime currDate) {
         Optional<UserBalance> userBalanceOptional = userBalanceRepo.findByUserId(userId);
 
         UserBalance userBalance;
         if (userBalanceOptional.isEmpty()) {
-            userBalance = new UserBalance(userId, amount, DEFAULT_CURRENCY);
+            userBalance = new UserBalance();
+            userBalance.setUserId(userId);
+            userBalance.setAmount(BigDecimal.ZERO);
             userBalance.setCreateDate(currDate);
             userBalance.setUpdateDate(currDate);
         } else {
