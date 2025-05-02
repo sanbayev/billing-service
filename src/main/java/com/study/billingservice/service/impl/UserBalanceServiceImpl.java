@@ -141,6 +141,7 @@ public class UserBalanceServiceImpl implements UserBalanceService {
             userBalance = userBalanceOptional.get();
             userBalance.setUpdateDate(currDate);
         }
+        userBalance.setCurrency(DEFAULT_CURRENCY);
         return userBalance;
     }
 }

@@ -1,4 +1,4 @@
-package com.study.billingservice.service.impl;
+package com.study.billingservice.service;
 
 import com.study.billingservice.dto.BalanceInfoDto;
 import com.study.billingservice.dto.TransferRequestDto;
@@ -8,6 +8,7 @@ import com.study.billingservice.enums.BalanceOperationType;
 import com.study.billingservice.exception.BalanceNotEnoughException;
 import com.study.billingservice.repo.TransactionHistoryRepo;
 import com.study.billingservice.repo.UserBalanceRepo;
+import com.study.billingservice.service.impl.UserBalanceServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -25,12 +26,13 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class UserBalanceServiceImplTest {
 
-    private static final Long TEST_USER_ID = 1L;
-    private static final Long TEST_USER_ID2 = 2L;
-    private static final String TEST_CURRENCY_CODE = "KZT";
-    private static final String TEST_COMMENT = "TEST_COMMENT";
-    private static final String TEST_ERROR_MESSAGE = "Недостаточный баланс";
-    private static final BigDecimal TEST_BALANCE_AMOUNT = BigDecimal.valueOf(1234);
+    public static final Long TEST_USER_ID = 1L;
+    public static final Long TEST_USER_ID2 = 2L;
+    public static final String TEST_CURRENCY_CODE = "KZT";
+    public static final String TEST_COMMENT = "TEST_COMMENT";
+    public static final String TEST_ERROR_MESSAGE = "Недостаточный баланс";
+    public static final BigDecimal TEST_BALANCE_AMOUNT = BigDecimal.valueOf(1234);
+    public static final BigDecimal TEST_ADD_BALANCE_AMOUNT = BigDecimal.valueOf(100);
 
     @Mock
     private UserBalanceRepo userBalanceRepo;
