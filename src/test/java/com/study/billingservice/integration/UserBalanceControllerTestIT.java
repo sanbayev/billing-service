@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static com.study.billingservice.service.UserBalanceServiceImplTest.*;
+import static com.study.billingservice.unit.UserBalanceServiceImplTest.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @AutoConfigureMockMvc
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class UserBalanceControllerTest extends AbstractIntegrationTest {
+public class UserBalanceControllerTestIT extends AbstractIntegrationTestIT {
 
 
     @Autowired
@@ -54,7 +54,7 @@ class UserBalanceControllerTest extends AbstractIntegrationTest {
 
     @Test
     @DisplayName("Test get balance by userId get zero")
-    void whenGetBalance_thenSuccessResponseWithZero() throws Exception {
+    public void whenGetBalance_thenSuccessResponseWithZero() throws Exception {
         //given
 
         //when
@@ -69,7 +69,7 @@ class UserBalanceControllerTest extends AbstractIntegrationTest {
 
     @Test
     @DisplayName("Test get balance by userId get added balance")
-    void givenAddBalance_whenGetBalance_thenSuccessResponseWithBalance() throws Exception {
+    public void givenAddBalance_whenGetBalance_thenSuccessResponseWithBalance() throws Exception {
         //given
         TransferRequestDto transferRequestDto = new TransferRequestDto(null, TEST_BALANCE_AMOUNT, TEST_COMMENT, BalanceOperationType.ADD);
 
@@ -88,7 +88,7 @@ class UserBalanceControllerTest extends AbstractIntegrationTest {
 
     @Test
     @DisplayName("Test add balance by userId")
-    void givenTransferDto_whenAddBalance_thenSuccessResponse() throws Exception {
+    public void givenTransferDto_whenAddBalance_thenSuccessResponse() throws Exception {
         //given
         TransferRequestDto transferRequestDto = new TransferRequestDto(null, TEST_BALANCE_AMOUNT, TEST_COMMENT, BalanceOperationType.ADD);
 
@@ -105,7 +105,7 @@ class UserBalanceControllerTest extends AbstractIntegrationTest {
 
     @Test
     @DisplayName("Test not enough balance to subtract by userId")
-    void givenTransferDto_whenSubtractBalance_thenBadRequestResponse() throws Exception {
+    public void givenTransferDto_whenSubtractBalance_thenBadRequestResponse() throws Exception {
         //given
         TransferRequestDto transferRequestDto = new TransferRequestDto(null, TEST_BALANCE_AMOUNT, TEST_COMMENT, BalanceOperationType.SUBTRACT);
 
@@ -121,7 +121,7 @@ class UserBalanceControllerTest extends AbstractIntegrationTest {
 
     @Test
     @DisplayName("Test transfer balance")
-    void givenTransferDto_whenTransferBalance_thenSuccessResponse() throws Exception {
+    public void givenTransferDto_whenTransferBalance_thenSuccessResponse() throws Exception {
         //given
         TransferRequestDto addBalanceDto = new TransferRequestDto(null, TEST_BALANCE_AMOUNT.add(TEST_ADD_BALANCE_AMOUNT), TEST_COMMENT, BalanceOperationType.ADD);
         TransferRequestDto transferRequestDto = new TransferRequestDto(TEST_USER_ID2, TEST_BALANCE_AMOUNT, TEST_COMMENT, BalanceOperationType.SUBTRACT);
@@ -142,7 +142,7 @@ class UserBalanceControllerTest extends AbstractIntegrationTest {
 
     @Test
     @DisplayName("Test get transaction page")
-    void givenAddBalanceDto_whenGetTransactions_thenSuccessResponse() throws Exception {
+    public void givenAddBalanceDto_whenGetTransactions_thenSuccessResponse() throws Exception {
         //given
         TransferRequestDto addBalanceDto = new TransferRequestDto(null, TEST_BALANCE_AMOUNT.add(TEST_ADD_BALANCE_AMOUNT), TEST_COMMENT, BalanceOperationType.ADD);
         RequestTransactionDto requestTransactionDto = new RequestTransactionDto(TEST_USER_ID, TransactionType.IN, TransactionSortType.AMOUNT, 0, 100);

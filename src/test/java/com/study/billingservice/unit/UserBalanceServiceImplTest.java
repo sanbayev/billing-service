@@ -1,4 +1,4 @@
-package com.study.billingservice.service;
+package com.study.billingservice.unit;
 
 import com.study.billingservice.dto.BalanceInfoDto;
 import com.study.billingservice.dto.TransferRequestDto;
@@ -8,13 +8,13 @@ import com.study.billingservice.enums.BalanceOperationType;
 import com.study.billingservice.exception.BalanceNotEnoughException;
 import com.study.billingservice.repo.TransactionHistoryRepo;
 import com.study.billingservice.repo.UserBalanceRepo;
-import com.study.billingservice.service.impl.UserBalanceServiceImpl;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.study.billingservice.unit.impl.UserBalanceServiceImpl;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -23,7 +23,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class UserBalanceServiceImplTest {
 
     public static final Long TEST_USER_ID = 1L;
