@@ -1,4 +1,4 @@
-package com.study.billingservice.unit.impl;
+package com.study.billingservice.service.impl;
 
 import com.study.billingservice.dto.BalanceInfoDto;
 import com.study.billingservice.dto.RequestTransactionDto;
@@ -11,7 +11,7 @@ import com.study.billingservice.mapper.TransactionMapper;
 import com.study.billingservice.repo.TransactionHistoryRepo;
 import com.study.billingservice.repo.TransactionSearchSpecification;
 import com.study.billingservice.repo.UserBalanceRepo;
-import com.study.billingservice.unit.UserBalanceService;
+import com.study.billingservice.service.UserBalanceService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

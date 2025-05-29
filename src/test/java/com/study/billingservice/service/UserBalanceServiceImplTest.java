@@ -1,4 +1,4 @@
-package com.study.billingservice.unit;
+package com.study.billingservice.service;
 
 import com.study.billingservice.dto.BalanceInfoDto;
 import com.study.billingservice.dto.TransferRequestDto;
@@ -8,7 +8,7 @@ import com.study.billingservice.enums.BalanceOperationType;
 import com.study.billingservice.exception.BalanceNotEnoughException;
 import com.study.billingservice.repo.TransactionHistoryRepo;
 import com.study.billingservice.repo.UserBalanceRepo;
-import com.study.billingservice.unit.impl.UserBalanceServiceImpl;
+import com.study.billingservice.service.impl.UserBalanceServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

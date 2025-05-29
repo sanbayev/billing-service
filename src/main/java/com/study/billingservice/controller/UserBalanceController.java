@@ -4,7 +4,7 @@ import com.study.billingservice.dto.BalanceInfoDto;
 import com.study.billingservice.dto.RequestTransactionDto;
 import com.study.billingservice.dto.TransactionHistoryDto;
 import com.study.billingservice.dto.TransferRequestDto;
-import com.study.billingservice.unit.UserBalanceService;
+import com.study.billingservice.service.UserBalanceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;

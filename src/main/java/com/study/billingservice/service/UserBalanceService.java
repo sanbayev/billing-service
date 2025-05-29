@@ -1,4 +1,4 @@
-package com.study.billingservice.unit;
+package com.study.billingservice.service;
 
 import com.study.billingservice.dto.BalanceInfoDto;
 import com.study.billingservice.dto.RequestTransactionDto;

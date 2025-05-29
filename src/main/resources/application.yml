@@ -11,3 +11,8 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: 'true'
+external-exchange:
+  base-url: https://api.exchangeratesapi.io/v1
+  access-key: ${EXCHANGE_API_KEY}
+  base-currency: EUR
+  supported-currencies: USD,KZT,RUB
