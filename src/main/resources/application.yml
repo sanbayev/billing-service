@@ -16,3 +16,10 @@ external-exchange:
   access-key: ${EXCHANGE_API_KEY}
   base-currency: EUR
   supported-currencies: USD,KZT,RUB
+
+resilience4j:
+  retry:
+    instances:
+      exchange-rate:
+        maxAttempts: 3
+        waitDuration: 2s

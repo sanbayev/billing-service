@@ -36,7 +36,6 @@ public class ExchangeRateJob {
         List<String> requestCurrencyList = Collections.singletonList(externalExchangeProperties.getBaseCurrency());
         requestCurrencyList.forEach(currency -> client.getRates(externalExchangeProperties.getBaseCurrency())
                 .doOnNext(exchangeRateService::save)
-                .doOnError(error -> log.info("Error fetching rates: {}", String.valueOf(error)))
                 .subscribe());
     }
 }
